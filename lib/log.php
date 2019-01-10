@@ -10,7 +10,7 @@ function db_log($botname, $action, $chat, $type, $content, $date) {
 function db_getchatlist($botname) {
 	global $LOGS_ENABLED;
 	if(!$LOGS_ENABLED) return;
-	$q = "SELECT chat FROM Logs WHERE bot='$botname';";
+	$q = "SELECT DISTINCT chat FROM Logs USE INDEX (chat) WHERE bot='$botname';";
 	$s = db_query($q);
 	$r = array();
 	foreach($s as $el) array_push($r, $el['chat']);

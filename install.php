@@ -15,7 +15,8 @@ $SETUPDBQUERIES = [
 
 // if needed, disable $STATES_ENABLED in lib/config.php
 $LOGSDBQUERIES = [
-	"CREATE TABLE `Logs` (`id` bigint(20) NOT NULL AUTO_INCREMENT, `bot` varchar(100) NOT NULL, `action` varchar(100) NOT NULL, `chat` int(14) NOT NULL, `type` varchar(30) NOT NULL, `content` varchar(250) NOT NULL, `date` varchar(30) NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `bot` (`bot`,`action`,`chat`,`date`));"
+	"CREATE TABLE `Logs` (`id` bigint(20) NOT NULL AUTO_INCREMENT, `bot` varchar(100) NOT NULL, `action` varchar(100) NOT NULL, `chat` int(14) NOT NULL, `type` varchar(30) NOT NULL, `content` varchar(250) NOT NULL, `date` varchar(30) NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `bot` (`bot`,`action`,`chat`,`date`));",
+	"ALTER TABLE 'telegram'.'Logs' DROP INDEX 'chat', ADD INDEX 'chat' ('chat') USING BTREE;"
 ];
 
 // if needed, enable $STATES_ENABLED in lib/config.php
@@ -33,7 +34,7 @@ if($DELETEEXISTENTWBHOOK) {
 }
 else { // you can register a new webhook only if you're not deleting existent webhook
 	if($REGISTERWEBHOOK) {
-		echo "Registering webhook...\n”;
+		echo "Registering webhook...\n";
 		$bot = new telegram_bot($TELEGRAM_TOKEN);
 		if($REGISTERSELFSIGNEDCERTIFICATE) {
 			if(class_exists('CurlFile', false)) $SSLCERTIFICATEFILE = new CURLFile(realpath($SSLCERTIFICATEFILENAME));
